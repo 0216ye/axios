@@ -17,7 +17,19 @@
   -->
   <script src="https://cdn.bootcss.com/axios/0.19.0/axios.js"></script>
   <script>
-    
+    //返回的instance实例，既是对象，又是函数！！！
+    const instance = axios.create({
+      baseURL:'http://127.0.0.1:3000'
+    })
+    instance.get('/posts',{
+      params:{
+        id:10
+      }
+    })
+    const instance1 = axios.create({
+      baseURL:'http://127.0.0.1:3000',
+    })
+    instance.get('/post')
   </script>
 </body>
 </html>

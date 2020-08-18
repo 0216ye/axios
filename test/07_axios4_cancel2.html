@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>取消请求</title>
+</head>
+<body>
+  <button onclick="getProducts1()">获取商品列表1</button><br>
+  <button onclick="getProducts2()">获取商品列表2</button><br>
+  <script src="https://cdn.bootcss.com/axios/0.19.0/axios.js"></script>
+  <script>
+    //需求，当在发送请求时，再一次点击发请求，则取消上次正在发送请求的请求
+
+    axios.defaults.baseURL='http://127.0.0.1:4000'
+    let cancel
+    function getProducts1() {
+        if (cancel){
+          cancel('强制取消请求') //参数保存在 message中
+        }
+      axios('/getProducts1', {
+        //配置了
+        cancelToken: new axios.CancelToken(function executor(c) {//在Canceltoken中的函数中的内容是立即同步执行的，并传入一个用于取消请求的函数c(cancel)
+          //保存用于取消请求的函数
+          cancel = c
+        })
+      })
+      .then(
+        response =>{
+          cancel = null  //请求成功了，清除cancel函数,重赋值，
+          console.log(response)
+        },
+        error =>{
+          // cancel = null  放这里不能实现需求，因为这里的异步执行的，而cancelToken赋值给cancel的是同步的，会造成  2的cancel = c执行后在执行cancel = null，最终再点1时，不能取消2的请求
+          if (axios.isCancel(error)){ //判断导致请求错误的原因
+            // cancel = null  因为取消请求就会进入这里，同样会因为异步和同步的问题
+            console.log('111  取消了请求',error.message)
+          }else{
+            cancel = null
+            console.log('2222 请求出错',error.message)
+          }
+        }
+      )
+    }
+    function getProducts2() {
+      if (cancel){
+        cancel('强制取消请求') //参数保存在 message中
+      }
+      axios({
+        url:'getProducts2',
+        cancelToken: new axios.CancelToken(function executor(c) {//在Canceltoken中函数是立即同步执行的，并传入一个用于取消请求的函数c(cancel)
+          //保存用于取消请求的函数
+          cancel = c
+        })
+      })
+        .then(
+          response =>{
+            cancel = null
+            console.log(response)
+          },
+          error =>{
+            // cancel = null
+            if (axios.isCancel(error)){ //判断导致请求错误的原因
+              // cancel = null
+              console.log('111  取消了请求',error.message)
+            }else{
+              cancel = null
+              console.log('2222 请求出错',error.message)
+            }
+          }
+        )
+    }
+
+    // function cancelReq() {
+    //   //取消请求
+    //   if (cancel){
+    //     cancel('强制取消请求') //参数保存在 message中
+    //   }
+    // }
+
+  </script>
+</body>
+</html>

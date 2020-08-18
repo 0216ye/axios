@@ -25,8 +25,9 @@ const posts = [
 
 app.get('/post', (req, res) => {
   // const id = req.params.id
-
-  res.send({status: 0, data: posts})
+  setTimeout(()=>{
+    res.send({status: 0, data: posts})
+  },1000)
 })
 
 app.post('/post', (req, res) => {
@@ -34,7 +35,9 @@ app.post('/post', (req, res) => {
   const id = Date.now()
   const post = {title, author, id}
   posts.push(post)
-  res.send({status: 0, data: post})
+  setTimeout(()=>{
+    res.send({status: 0, data: post})
+  },1000)
 })
 
 app.put('/post', (req, res) => {

@@ -5,14 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>axios基本使用</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.20.0-0/axios.js"></script>
 </head>
 <body>
-  
-    <div>
-      <button onclick="testGet()">GET请求</button>
-      <button onclick="testPost()">POST请求</button>
-      <button onclick="testPut()">PUT请求</button>
-      <button onclick="testDelete()">DELETE请求</button>
-    </div>
+<button onclick="testGet()">发送GET请求</button>
+<br>
+<button onclick="testPost()">发送POST请求</button>
+<br>
+<button onclick="testPut()">发送PUT请求</button>
+<br>
+<button onclick="testDelete()">发送Delete请求</button>
+<br>
+<script>
+  //配置默认的路径
+  axios.defaults.baseURL =  'http://localhost:3000'
+  function testGet() {
+    // axios({
+    //   method:'GET',
+    //   // url:'/posts/2', //指定param参数
+    //   url:'/posts',
+    //   params:{ //指定query参数
+    //     id:2
+    //   }
+    // })
+      axios.get('/posts',{
+        params:{
+          id:2
+        }
+      })
+      .then(
+        response =>{
+          console.log(response.data,response.status,response.statusText)
+        },
+        error => {
+          alert(error)
+        }
+      )
+  }
+
+  function testPost() {
+    // axios({
+    //   method: 'POST',
+    //   url: '/posts',
+    //   data:{ //指定请求体参数
+    //     title:'ye',
+    //     author:'yong'
+    //   }
+    // })
+    axios.post('/posts',{title:'Zha',author:'ying'})
+      .then(
+        response =>{
+          console.log(response.data,response.status,response.statusText)
+        },
+        error => {
+          alert(error)
+        }
+      )
+  }
+
+  function testPut() {
+    // axios({
+    //   method: 'PUT',
+    //   url: '/posts/7',
+    //   data:{ //指定请求体参数
+    //     title:'yeyongjie',
+    //     author:'yyj'
+    //   }
+    // })
+    axios.put('/posts/10',{title:'叶',author:'永洁'})
+      .then(
+        response =>{
+          console.log(response.data,response.status,response.statusText)
+        },
+        error => {
+          alert(error)
+        }
+      )
+  }
+
+  function testDelete() {
+    // axios({
+    //   method: 'DELETE',
+    //   url: '/posts/7',
+    // })
+    axios.delete('/posts/8')
+      .then(
+        response =>{
+          console.log(response.data,response.status,response.statusText)
+        },
+        error => {
+          alert(error)
+        }
+      )
+  }
+
+
+</script>
 </body>
 </html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>axios的处理链流程</title>
+</head>
+<body>
+
+<script src="https://cdn.bootcss.com/axios/0.19.0/axios.js"></script>
+<script>
+  /*
+    拦截器:属于链式执行，类似.then
+
+    以下代码的执行流程 : 先执行请求拦截器2 ->执行请求拦截器1 ->发送ajax请求 ->执行响应拦截器1 —>执行响应拦截器2
+   */
+
+  //添加请求拦截器 : 先定义的后执行，后定义的先执行，每个请求拦截器必须返回 config,否则影响链式调用，
+  axios.interceptors.request.use(function (config) {
+    console.log('req 1 请求', config)
+    return config;
+  });
+  axios.interceptors.request.use(function (config) {
+    console.log('req 2 请求', config)
+    return config; //必须返回config
+  });
+  //添加响应拦截器 ：先定义先执行,返回值可以不用是response
+  axios.interceptors.response.use(function (response) {
+    console.log('res 1 响应')
+    console.log(response)
+    return response.data;
+  }, function (error) {
+    console.log('reject 1')
+    return Promise.reject(error);
+  });
+  axios.interceptors.response.use(function (data) {
+    console.log('res 2 响应')
+    console.log(data)
+    return data;
+  }, function (error) {
+    console.log('reject 2')
+    return Promise.reject(error);
+  });
+
+  axios.defaults.baseURL = 'http://localhost:3000'
+  axios({
+    url:'/posts'
+    }
+  ).then(
+      data => {
+        console.log('onResolve')
+        console.log(data)
+      },
+      error => {
+        console.log('onReject')
+        console.log(error)
+      }
+    )
+</script>
+</body>
+</html>
