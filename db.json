@@ -1,0 +1,76 @@
+{
+  "posts": [
+    {
+<<<<<<< HEAD
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    },
+    {
+      "id": 2
+    },
+    {
+      "title": "ye",
+      "author": "yong",
+      "id": 3
+    },
+    {
+      "title": "ye",
+      "author": "yong",
+      "id": 4
+    },
+    {
+      "title": "ye",
+      "author": "yong",
+=======
+      "id": 2,
+      "title": "json-server22",
+      "author": "typicode"
+    },
+    {
+      "title": "aaa",
+      "author": "bbb",
+      "id": 3
+    },
+    {
+      "param": 2,
+      "id": 4
+    },
+    {
+      "param": 2,
+>>>>>>> parent of 6a1019c... 基本结束
+      "id": 5
+    },
+    {
+      "title": "ye",
+      "author": "yong",
+      "id": 6
+<<<<<<< HEAD
+    },
+    {
+      "title": "叶",
+      "author": "永洁",
+      "id": 10
+    },
+    {
+      "title": "Zha",
+      "author": "ying",
+      "id": 11
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+=======
+    }
+  ],
+  "comments": [],
+>>>>>>> parent of 6a1019c... 基本结束
+  "profile": {
+    "name": "typicode"
+  }
+}
